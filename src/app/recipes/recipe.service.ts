@@ -1,3 +1,4 @@
+import { EventEmitter } from '@angular/core';
 import { Recipe } from './recipe.model';
 
 export class RecipeService {
@@ -13,8 +14,12 @@ export class RecipeService {
           'https://cookieandkate.com/images/2018/12/pomegranate-pear-arugula-salad-recipe-2.jpg'
         ),
       ];
+
+    selectedRecipe = new EventEmitter<Recipe>();
     
     getRecipes() {
         return this.recipes.slice();
     }      
+
+    
 }
