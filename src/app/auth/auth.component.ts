@@ -31,10 +31,10 @@ export class AuthComponent {
             this.authService.signup(email, password).subscribe(resData => {
                 console.log(resData);
                 this.isLoading = false;
-            }, error => {
+            }, errorMessage => {
+                this.error = errorMessage;
+                console.log(errorMessage);
                 this.isLoading = false;
-                this.error = "An error occurred!";
-                console.log(error);
             })
         }
         form.reset();
