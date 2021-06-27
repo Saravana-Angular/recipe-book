@@ -43,11 +43,11 @@ export class AuthService {
             })
             .pipe(catchError(this.handleError), tap((resData) => {
                 this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)           
-            })
+            }))
     }
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
-        const expirationDate = new Date(new Date().getTime() + resData.expiresIn * 1000)
+        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000)
         const user = new User(email, userId, token, expirationDate);
         this.user.next(user);
     }
