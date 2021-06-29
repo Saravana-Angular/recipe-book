@@ -59,7 +59,9 @@ export class AuthService {
         }
 
         const loadedUser = new User(userData.email, userData.id, userData.token, new Date(userData.tokenExpirationDate));
-        this.user.next(loadedUser);
+        if(!loadedUser.token) {
+            this.user.next(loadedUser);
+        }
     }
 
     logout() {
