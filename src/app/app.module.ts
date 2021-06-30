@@ -23,26 +23,28 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AuthGuard } from './auth/auth.guard';
 import { AlertComponent } from './shared/alert/alert.component';
 import { PlaceholderDirective } from './shared/placeholder/placeholder.directive';
+import { RecipesModule } from './recipes/recipes.module';
 
 @NgModule({
   declarations: [
     AppComponent, 
     HeaderComponent, 
-    RecipesComponent, 
-    RecipeDetailComponent, 
-    RecipeListComponent, 
-    RecipeItemComponent, 
     ShoppingListComponent, 
     ShoppingEditComponent, 
     DropdownDirective, 
-    RecipeStartComponent, 
-    RecipeEditComponent,
     AuthComponent,
     LoadingSpinnerComponent,
     AlertComponent,
     PlaceholderDirective
 ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [
+    BrowserModule, 
+    AppRoutingModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    HttpClientModule,
+    RecipesModule
+  ],
   providers: [ShoppingListService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent],
 })
