@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -10,6 +10,7 @@ import { AuthComponent } from './auth/auth.component';
 import { RecipesModule } from './recipes/recipes.module';
 import { ShoppingListModule } from './shopping-list/shopping-edit/shopping-list.module';
 import { CoreModule } from './core.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CoreModule } from './core.module';
     HttpClientModule,
     RecipesModule,
     ShoppingListModule,
+    SharedModule,
     CoreModule
   ],
   bootstrap: [AppComponent],
