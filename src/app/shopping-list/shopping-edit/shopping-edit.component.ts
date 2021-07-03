@@ -33,6 +33,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       if(stateData.editedIngredientIndex > -1) {
         this.editMode = true;
         this.editedItem = stateData.editedIngredient;
+        this.editedItemIndex = stateData.editedIngredientIndex;
         this.slForm.setValue({
           'name': this.editedItem.name,
           'amount': this.editedItem.amount
