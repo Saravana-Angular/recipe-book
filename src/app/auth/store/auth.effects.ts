@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Actions, createEffect, Effect, ofType } from "@ngrx/effects";
-import { Observable, of } from "rxjs";
+import { of } from "rxjs";
 import { catchError, exhaustMap, map, switchMap } from "rxjs/operators";
 import * as AuthActions from "./auth.actions";
 import { environment } from "../../../environments/environment";
