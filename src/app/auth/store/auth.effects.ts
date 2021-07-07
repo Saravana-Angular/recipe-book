@@ -1,10 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Actions, createEffect, Effect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
-import { catchError, exhaustMap, map, switchMap } from "rxjs/operators";
+import { catchError, exhaustMap, map, switchMap, tap } from "rxjs/operators";
 import * as AuthActions from "./auth.actions";
 import { environment } from "../../../environments/environment";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
 export interface AuthResponse {
     idToken: string,
@@ -18,7 +19,7 @@ export interface AuthResponse {
 @Injectable()
 export class AuthEffects {
     
-    constructor(private actions$: Actions, private http: HttpClient) {}
+    constructor(private actions$: Actions, private http: HttpClient, private router: Router) {}
 
     @Effect()
     authLogin = this.actions$.pipe(
@@ -34,7 +35,7 @@ export class AuthEffects {
                         map(resData => {
                             const expirationDate = new Date(new Date().getTime() + +resData.expiresIn * 1000)
                             
-                            return of(new AuthActions.Login({
+                            return (new AuthActions.Login({
                                     email: resData.email,
                                     userId: resData.localId,
                                     token: resData.idToken,
@@ -46,4 +47,9 @@ export class AuthEffects {
                     }))
                 
             }))
+ 
+    @Effect({dispatch: false})      
+    authSuccess = this.actions$.pipe(ofType(AuthActions.LOGIN), tap(() => {
+        this.router.navigate(['/'])
+    }))
 }
