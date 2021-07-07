@@ -41,10 +41,26 @@ export class AuthEffects {
                                     token: resData.idToken,
                                     expirationDate: expirationDate
                                 }));
-                        }), catchError(error => {
-                        //...
-                        return of();
-                    }))
+                        }), catchError(errorRes => {
+                            let errorMessage = "An unknown error has occurred!";
+                            if(!errorRes.error || !errorRes.error.error) {
+                                return of (new AuthActions.LoginFail(errorMessage));
+                            }
+                            
+                            switch (errorRes.error.error.message) {
+                                case 'EMAIL_EXISTS':
+                                    errorMessage = "This email already exists!"
+                                    break;
+                                case 'EMAIL_NOT_FOUND':
+                                    errorMessage = "This email does not exist!"
+                                    break;
+                                case 'INVALID_PASSWORD':
+                                    errorMessage = "The password is not correct!"
+                                    break;
+                            }
+                            
+                            return of(new AuthActions.LoginFail(errorMessage));
+            }))
                 
             }))
  
