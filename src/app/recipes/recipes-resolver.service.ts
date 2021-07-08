@@ -6,7 +6,8 @@ import { RecipeService } from "./recipe.service";
 import * as fromApp from '../store/app.reducer';
 import * as RecipeActions from './store/recipe.actions';
 import { Actions, ofType } from '@ngrx/effects';
-import { take } from "rxjs/operators";
+import { exhaustMap, map, take } from "rxjs/operators";
+import { of } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -25,11 +26,20 @@ export class RecipesResolverService {
         //     return this.dataStorageService.fetchRecipes();
         // }
         // return recipes;
-        this.store.dispatch(new RecipeActions.FetchRecipes());
-        return this.actions$.pipe(
-            ofType(RecipeActions.SET_RECIPES),
-            take(1)
-        )
+        this.store.select('recipes').pipe(map(recipesState => {
+            return recipesState.recipes
+        }),
+        exhaustMap(recipes => {
+            if(recipes.length === 0) {
+                this.store.dispatch(new RecipeActions.FetchRecipes());
+                return this.actions$.pipe(
+                    ofType(RecipeActions.SET_RECIPES),
+                    take(1)
+                )
+            } else {
+                return of(recipes);
+            }
+        }))
     }
 
 }
